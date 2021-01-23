@@ -1,7 +1,7 @@
 package com.example.simpletodo;
 
 import android.os.Bundle;
-import android.os.FileUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,12 +11,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.apache.commons.io.FileUtils;
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.io.FileUtils;    //this import keeps disappearing all the time!
-
 
 /*
 DESIGN NOTES
@@ -56,23 +56,20 @@ public class MainActivity extends AppCompatActivity {
         buttonAdd = findViewById(R.id.buttonAdd);
         editToDoItems = findViewById(R.id.editToDoItems);
         rvItems = findViewById(R.id.rvItems);
-        editToDoItems.setText("");     //IT WORKSSSS; Time to MUTATE these with the 'Adapter'
+        editToDoItems.setText("");
 
         //List of items created
         loadItems();
 
         //here is the position of item that is long-pressed
-        ItemsAdapter.OnLongClickListener onLongClickListener = new ItemsAdapter.OnLongClickListener(){
+        ItemsAdapter.OnLongClickListener onLongClickListener = new ItemsAdapter.OnLongClickListener() {
             @Override
             public void onItemLongClicked(int position) {
-                //delete the item from model
                 toDoItems.remove(position);
-                //notify the adapter
                 itemsAdapter.notifyItemRemoved(position);
-                Toast.makeText(getApplicationContext(),"Item was removed", Toast.LENGTH_SHORT).show();
                 saveItems();
             }
-        }
+        };
         ItemsAdapter itemsAdapter = new ItemsAdapter(toDoItems, onLongClickListener);
         rvItems.setAdapter(itemsAdapter);
         rvItems.setLayoutManager(new LinearLayoutManager(this));
@@ -103,20 +100,21 @@ public class MainActivity extends AppCompatActivity {
     private void loadItems()
     {
         try {
-            toDoItems = new ArrayList<>(FileUtils.readLines(getDataFile()), Charset.defaultCharset());
+            toDoItems = new ArrayList<>(FileUtils.readLines(getDataFile(), Charset.defaultCharset()));
         }catch (IOException e)
         {
-            Log.e(tag: "MainActivity", msg: "Error reading items", e);
+            Log.e("MainActivity", "Error reading items", e);
+            toDoItems = new ArrayList<>();
         }
     }
     //function saves items by writing to 'data.txt' file
     private void saveItems()
     {
         try {
-            FileUtils.writeLines(getDataFile(), items);
+            FileUtils.writeLines(getDataFile(), toDoItems);
         }catch (IOException e)
         {
-            Log.e(tag: "MainActivity", msg: "Error writing items", e);
+            Log.e( "MainActivity", "Error writing items", e);
         }
     }
 

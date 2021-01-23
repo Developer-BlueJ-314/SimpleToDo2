@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
-    implementation 'commons-io:commons-io:2.6'     //this is the correct command right?
+    implementation 'commons-io:commons-io:2.6'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
