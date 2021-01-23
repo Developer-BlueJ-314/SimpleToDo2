@@ -17,6 +17,7 @@ The following **required** functionality is completed:
  and then have any changes to the text reflected in the todo list
 
 ## Video Walkthrough
+<img src='https://github.com/Developer-BlueJ-314/SimpleToDo2/blob/master/CodePath%20ToDo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
